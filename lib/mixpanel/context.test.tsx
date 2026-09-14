@@ -19,7 +19,8 @@ describe('MixpanelContext', () => {
   }) => (
     <MixpanelProvider
       trackingService={new WebTrackingService(eventApiClient)}
-      defaultEventContext={defaultEventContext}>
+      defaultEventContext={defaultEventContext}
+    >
       {children}
     </MixpanelProvider>
   );
@@ -48,7 +49,8 @@ describe('MixpanelContext', () => {
             context: { title: 'Page title' },
             data: { productId: '123' },
           })
-        }>
+        }
+      >
         button
       </button>
     );
@@ -136,7 +138,7 @@ describe('MixpanelContext', () => {
     };
 
     const { getByText } = renderWithMixpanelProvider(
-      <TrackEventTestingComponent defaultEventContext={defaultEventContext} />
+      <TrackEventTestingComponent defaultEventContext={defaultEventContext} />,
     );
 
     fireEvent.click(getByText('button'));
@@ -163,6 +165,29 @@ describe('MixpanelContext', () => {
       name: 'Page view',
       context: {
         pwa: false,
+      },
+      data: {
+        title: 'Example',
+        pathname: '/product/1',
+        route: '/product/:id',
+      },
+    });
+  });
+
+  test('provider can extend the default context for page view tracking with provider prop', () => {
+    const defaultEventContext = {
+      audience: 'Consumer',
+    };
+
+    renderWithMixpanelProvider(<TrackPageView />, {
+      contextWrapperProps: { defaultEventContext },
+    });
+
+    expect(eventApiClient).toHaveBeenCalledWith({
+      name: 'Page view',
+      context: {
+        pwa: false,
+        audience: 'Consumer',
       },
       data: {
         title: 'Example',

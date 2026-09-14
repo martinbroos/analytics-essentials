@@ -79,11 +79,12 @@ export function MixpanelProvider({
       trackingService.trackPageView({
         ...event,
         context: {
+          ...eventContext,
           ...event.context,
         },
       });
     },
-    [trackingService],
+    [trackingService, eventContext],
   );
 
   useEffect(() => {
