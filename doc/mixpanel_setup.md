@@ -178,8 +178,6 @@ They will be remembered for the duration of the session. Even if the user naviga
 
 On mobile, the UTM tags can not be stored in the session, use `disableSessionStorage` to disable this behaviour.
 
-```tsx
-
 ## Mixpanel users
 
 Mixpanel events can be attached to a user. This is done in the backend on user login, see [FHMixpanelBundle](https://github.com/freshheads/FHMixpanelBundle) for more information.
